@@ -19,7 +19,7 @@ from django.utils import timezone
 from django.conf import settings
 settings.GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-class ChatbotView(TemplateView):
+class ChatbotView(TemplateView, LoginRequiredMixin):
     template_name = "chatbot2.html"
     
     def get_context_data(self, **kwargs):
