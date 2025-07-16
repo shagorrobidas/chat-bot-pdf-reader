@@ -17,7 +17,6 @@ from langchain.chains.question_answering import load_qa_chain
 import os
 from django.utils import timezone
 from django.conf import settings
-
 settings.GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 class ChatbotView(TemplateView):
