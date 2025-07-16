@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Upload PDF</h5>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input class="form-control" type="file" name="pdf_file" accept=".pdf" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                    
+                    {% if file_uploaded %}
+                        <div class="mt-3 alert alert-success">
+                            File uploaded: {{ request.session.original_filename }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Chat with PDF</h2>
+                    
+                    {% if file_uploaded %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Ask about the document:</label>
+                                <input type="text" class="form-control" name="user_query" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Ask Question</button>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-info">
+                            Please upload a PDF file to get started.
+                        </div>
+                    {% endif %}
+                    
+                    {% if response %}
+                        <div class="mt-4 alert alert-success">
+                            <h4>Response:</h4>
+                            <p>{{ response }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    {% if error %}
+                        <div class="mt-4 alert alert-danger">
+                            <strong>Error:</strong> {{ error }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
